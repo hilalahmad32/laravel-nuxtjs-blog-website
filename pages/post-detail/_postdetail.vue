@@ -1,12 +1,18 @@
 <template>
   <div>
     <NavbarVue />
-    <PostDetailHeroVue :title="item.title" />
-    <PostDetailVue
-      :category="item.category"
-      :title="item.title"
-      :content="item.content"
-    />
+    <PostDetailHeroVue :title="title" />
+    <div v-if="isloading" class="my-4 text-center">Loading...</div>
+    <div v-else>
+      <PostDetailVue
+        :category="category"
+        :title="title"
+        :content="description"
+        :image="image"
+        :id="id"
+      />
+    </div>
+
     <FooterVue />
   </div>
 </template>
@@ -15,12 +21,12 @@ import FooterVue from "../../components/front/Footer.vue";
 import NavbarVue from "../../components/front/Navbar.vue";
 import PostDetailVue from "../../components/front/PostDetail.vue";
 import PostDetailHeroVue from "../../components/front/PostDetailHero.vue";
-
+import axios from "axios";
 export default {
   name: "PostDetail",
   head() {
     return {
-      title: this.item.title,
+      title: this.title,
     };
   },
   components: {
@@ -30,13 +36,27 @@ export default {
     PostDetailVue,
   },
   data: () => ({
-    item: {
-      title: "welcome to my new website",
-      content:
-        " Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, eaque sequi sint magni saepe beatae id ad odio iste accusamus, nisi ratione placeat obcaecati commodi tenetur laborum iusto consequuntur fugit?",
-      category: "Food",
-    },
+    title: "",
+    id: "",
+    image: "",
+    category: "",
+    description: "",
+    isloading: false,
   }),
+  async mounted() {
+    this.isloading = true;
+
+    const res = await axios.get(
+      "http://localhost:8000/api/front/single-posts/" +
+        this.$route.params.postdetail
+    );
+    this.isloading = false;
+    this.title = res.data.posts.title;
+    this.image = res.data.posts.image;
+    this.id = res.data.posts.categorys.id;
+    this.description = res.data.posts.description;
+    this.category = res.data.posts.categorys.category_name;
+  },
 };
 </script>
 <style>

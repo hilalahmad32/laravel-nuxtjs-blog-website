@@ -6,13 +6,15 @@
           <div class="my-10">
             <img
               style="width: 100%"
-              src="https://images.unsplash.com/photo-1649651738909-967f63511615?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=60)"
+              :src="`http://localhost:8000/storage/${image}`"
               :alt="title"
             />
             <div class="my-2">
               <h2>{{ title }}</h2>
             </div>
-            <h4 class="mb-2">{{ category }}</h4>
+            <nuxt-link :to="`/category-posts/${id}`">
+              <h4 class="mb-2">{{ category }}</h4></nuxt-link
+            >
             <div class="mb-3">
               <p>
                 {{ content }}
@@ -29,10 +31,15 @@
                 <h3>Categorys</h3>
               </v-card-title>
               <v-card-text>
-                <h4 class="mt-2">Category</h4>
-                <h4 class="mt-2">Category</h4>
-                <h4 class="mt-2">Category</h4>
-                <h4 class="mt-2">Category</h4>
+                <nuxt-link
+                  v-for="(category, index) in $store.state.getCategorys"
+                  :key="index"
+                  :to="`/category-posts/${category.id}`"
+                >
+                  <h4 class="mt-2">
+                    {{ category.category_name }}
+                  </h4></nuxt-link
+                >
               </v-card-text>
             </v-card>
           </div>
@@ -43,17 +50,12 @@
                 <h3>Lastest Posts</h3>
               </v-card-title>
               <v-card-text>
-                <nuxt-link :to="{ path: '/post-detail/' + title }">
-                  <h4 class="mt-2">{{ title }}</h4>
-                </nuxt-link>
-                <nuxt-link :to="{ path: '/post-detail/' + title }">
-                  <h4 class="mt-2">{{ title }}</h4>
-                </nuxt-link>
-                <nuxt-link :to="{ path: '/post-detail/' + title }">
-                  <h4 class="mt-2">{{ title }}</h4>
-                </nuxt-link>
-                <nuxt-link :to="{ path: '/post-detail/' + title }">
-                  <h4 class="mt-2">{{ title }}</h4>
+                <nuxt-link
+                  v-for="(latestPost, index) in $store.state.latestPosts"
+                  :key="index"
+                  :to="{ path: '/post-detail/' + latestPost.id }"
+                >
+                  <h4 class="mt-2">{{ latestPost.title }}</h4>
                 </nuxt-link>
               </v-card-text>
             </v-card>
@@ -98,12 +100,24 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "PostDetailComp",
+
   props: {
+    id: String,
     title: String,
     category: String,
     content: String,
+    image: String,
+  },
+  methods: {
+    ...mapActions(["getLatestPost"]),
+    ...mapActions(["getCategorys"]),
+  },
+  mounted() {
+    this.getLatestPost();
+    this.getCategorys();
   },
 };
 </script>

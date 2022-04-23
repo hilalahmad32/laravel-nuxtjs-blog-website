@@ -92,8 +92,11 @@ export default {
       this.deletePost(id);
       this.getPosts();
     },
+    ...mapActions(["getAdmins"]),
   },
+
   mounted() {
+    this.getAdmins();
     this.getPosts();
   },
 };

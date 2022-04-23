@@ -85,8 +85,12 @@ export default {
       this.deleteCategory(id);
       this.getCategory();
     },
+    ...mapActions(["getAdmins"]),
   },
+
   mounted() {
+    this.getAdmins();
+
     this.getCategory();
   },
 };

@@ -5,6 +5,9 @@ export const state = () => ({
     isloading: false,
     categorys: [],
     posts: [],
+    popularPosts: [],
+    latestPosts: [],
+    getCategorys: [],
 })
 
 export const mutations = {
@@ -22,10 +25,20 @@ export const mutations = {
     },
     setPosts(state, posts) {
         state.posts = posts;
-    }
+    },
+    setPopularPost(state, popularPosts) {
+        state.popularPosts = popularPosts;
+    },
+    setLatestPost(state, latestPosts) {
+        state.latestPosts = latestPosts;
+    },
+    setgetCategory(state, getCategorys) {
+        state.getCategorys = getCategorys;
+    },
 }
 
 export const actions = {
+    // Admins side
     // admin login
     async adminLogins({ commit }, data) {
         commit('setIsLoading', true);
@@ -222,5 +235,28 @@ export const actions = {
             })
         }
 
+    },
+
+    // frontend side
+
+    async getPopularPost({ commit }) {
+        commit("setIsLoading", true);
+        const res = await axios.get("http://localhost:8000/api/front/popular-posts");
+        commit("setPopularPost", res.data.posts)
+        commit("setIsLoading", false);
+
+    },
+    async getLatestPost({ commit }) {
+        commit("setIsLoading", true);
+        const res = await axios.get("http://localhost:8000/api/front/latest-posts");
+        commit("setLatestPost", res.data.posts)
+        commit("setIsLoading", false);
+
+    },
+    async getCategorys({ commit }) {
+        const res = await axios.get("http://localhost:8000/api/front/categorys");
+        commit("setgetCategory", res.data.categorys)
+
     }
+
 }
