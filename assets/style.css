@@ -1,0 +1,154 @@
+.form{
+    width: 100%;
+}
+.login__btn{
+    margin: 20px 0px;
+}
+
+
+.margin__card{
+    margin: 20% 0px;
+}
+
+.btn__width{
+    width: 100%;
+}
+.btn__border{
+    border: 1px solid rgb(59, 59, 212);
+}
+.btn__border:hover{
+    background-color: rgb(59, 59, 212);
+    color: white !important;
+
+}
+
+
+.show{
+    display: none !important;
+}
+.text--white{
+    color: white !important;
+}
+a{
+    text-decoration: none !important;
+}
+.main__nav{
+    background-color:#2980b9;
+}
+.nav__logo{
+    font-size: 2rem;
+    color: white !important;
+
+
+}
+.w__40{
+    max-width: 50%;
+    
+}
+
+.nav_link{
+    color: black !important;
+    margin-left: 10px;
+    font-size: 1.3rem;
+    padding:3px 10px;
+    color: white ;
+
+}
+.nav_link:hover{
+    border-bottom: 2px solid rgb(221, 226, 221);
+
+    transition: all 0.2s;
+}
+.navbar{
+    display: flex;
+}
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bg_image{
+    width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 80vh;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+.nuxt-link-active {
+    border-bottom: 2px solid rgb(221, 226, 221);
+}
+.text-gray{
+    color: rgb(148, 147, 147);
+}
+.mb-10{
+    margin-bottom: 5px !important;
+}
+
+.bg__blue{
+    background-color: rgb(44, 43, 43);
+
+}
+.p-3{
+    padding: 10px;
+}
+
+ul li{
+    list-style: none !important;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #fff !important;
+}
+.selectBox{
+    width: 100%;
+    padding: 10px 4px;
+    border:1px solid white;
+    margin: 20px 0px;
+    border-radius:5px;
+    color: white;
+}
+.selectBox option{
+    color: black;
+}
+@media screen and (max-width:800px) {
+    .show{
+        display: block !important;
+        transition: all .4s;
+
+    }
+    .main__nav{
+        position: relative;
+
+    }
+    .navbar{
+        position: absolute;
+        left: 0 !important;
+        top: 100% !important;
+        background-color: #2980b9;
+        width: 100% !important;
+        /* text-align: center !important; */
+        display: none !important;
+        z-index: 9999;
+      
+    }
+    .navbar a{
+        display: block !important;
+
+    }
+    .active_nav{
+        display: block !important;
+
+    }
+    .navbar a{
+        margin: 20px 0px !important;
+
+    }
+    .w__40{
+        max-width: 100%;
+        margin: 0px 20px !important;
+        
+    }
+}
