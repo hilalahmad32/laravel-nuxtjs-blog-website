@@ -21,7 +21,15 @@
               </p>
             </div>
           </div>
-          <h3>Comments( 44 )</h3>
+          <h3>
+            Comments(
+            {{
+              $store.state.comments.length > 0
+                ? $store.state.comments.length
+                : "0"
+            }}
+            )
+          </h3>
           <hr />
         </v-col>
         <v-col xl="4" lg="4" md="4" sm="12">
@@ -64,10 +72,13 @@
       </v-row>
       <v-row>
         <v-col xl="7" lg="7" md="7" sm="12">
-          <div v-for="i in 6" :key="i">
+          <div v-if="!$store.state.comments.length > 0">
+            Comment not found in this post
+          </div>
+          <div v-for="(comment, index) in $store.state.comments" :key="index">
             <v-sheet class="p-3">
-              <h3>Hilal ahmad</h3>
-              <p>comment</p>
+              <h3>{{ comment.name }}</h3>
+              <p>{{ comment.comment }}</p>
               <hr />
             </v-sheet>
           </div>
@@ -78,21 +89,30 @@
               label="Enter Your Name"
               class="form__control"
               hide-details="auto"
+              v-model="name"
             >
             </v-text-field>
             <v-text-field
               label="Enter Your Email"
               class="form__control"
               hide-details="auto"
+              v-model="email"
             >
             </v-text-field>
             <v-text-field
               label="Enter Your Comment"
               class="form__control"
               hide-details="auto"
+              v-model="comments"
             >
             </v-text-field>
-            <v-btn color="error" class="login__btn"> Comment</v-btn>
+            <v-btn
+              color="error"
+              @click="submitComments(postid)"
+              class="login__btn"
+            >
+              Comment</v-btn
+            >
           </form>
         </v-col>
       </v-row>
@@ -105,19 +125,47 @@ export default {
   name: "PostDetailComp",
 
   props: {
-    id: String,
+    id: Number,
     title: String,
     category: String,
     content: String,
     image: String,
+    postid: Number,
   },
+  data: () => ({
+    name: "",
+    email: "",
+    comments: "",
+  }),
   methods: {
     ...mapActions(["getLatestPost"]),
     ...mapActions(["getCategorys"]),
+    ...mapActions(["addComment"]),
+    ...mapActions(["getComments"]),
+    async submitComments(cid) {
+      if (!this.name || !this.email || !this.comments) {
+        this.$toast.show("Please fill the field", {
+          type: "error",
+        });
+      } else {
+        const data = {
+          id: cid,
+          name: this.name,
+          email: this.email,
+          comment: this.comments,
+        };
+        await this.addComment(data);
+        this.getComments(this.postid);
+        this.name = "";
+        this.email = "";
+        this.comments = "";
+      }
+    },
   },
   mounted() {
     this.getLatestPost();
     this.getCategorys();
+    this.getComments(this.postid);
   },
 };
 </script>

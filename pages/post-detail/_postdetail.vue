@@ -10,6 +10,7 @@
         :content="description"
         :image="image"
         :id="id"
+        :postid="postid"
       />
     </div>
 
@@ -37,7 +38,8 @@ export default {
   },
   data: () => ({
     title: "",
-    id: "",
+    postid: 0,
+    id: 0,
     image: "",
     category: "",
     description: "",
@@ -52,6 +54,7 @@ export default {
     );
     this.isloading = false;
     this.title = res.data.posts.title;
+    this.postid = res.data.posts.id;
     this.image = res.data.posts.image;
     this.id = res.data.posts.categorys.id;
     this.description = res.data.posts.description;

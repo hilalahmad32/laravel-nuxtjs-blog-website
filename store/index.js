@@ -8,6 +8,8 @@ export const state = () => ({
     popularPosts: [],
     latestPosts: [],
     getCategorys: [],
+    allPosts: [],
+    comments: [],
 })
 
 export const mutations = {
@@ -35,6 +37,12 @@ export const mutations = {
     setgetCategory(state, getCategorys) {
         state.getCategorys = getCategorys;
     },
+    setAllPosts(state, allPosts) {
+        state.allPosts = allPosts;
+    },
+    setComments(state, comments) {
+        state.comments = comments;
+    }
 }
 
 export const actions = {
@@ -238,7 +246,6 @@ export const actions = {
     },
 
     // frontend side
-
     async getPopularPost({ commit }) {
         commit("setIsLoading", true);
         const res = await axios.get("http://localhost:8000/api/front/popular-posts");
@@ -257,6 +264,58 @@ export const actions = {
         const res = await axios.get("http://localhost:8000/api/front/categorys");
         commit("setgetCategory", res.data.categorys)
 
-    }
+    },
+    async getAllPost({ commit }) {
+        commit("setIsLoading", true)
+        const res = await axios.get("http://localhost:8000/api/front/all-posts");
+        commit("setIsLoading", false)
+        commit("setAllPosts", res.data.posts)
 
+    },
+    // submit comments
+    async addComment({ commit }, data) {
+        commit('setIsLoading', true);
+        const res = await axios.post(`http://localhost:8000/api/front/comments/${data.id}`, data);
+        if (res.data.success) {
+            commit('setIsLoading', false);
+            this.$toast.show(res.data.message, {
+                type: 'success'
+            });
+            this.$router.push(`/post-detail/${data.id}`)
+
+        } else {
+            commit('setIsLoading', false);
+            this.$toast.show(res.data.message, {
+                type: 'error'
+            });
+        }
+
+    },
+    // get Comments
+    async getComments({ commit }, id) {
+        console.log(id);
+        const res = await axios.get("http://localhost:8000/api/front/comments/" + id);
+        if (res.data.success) {
+            commit("setComments", res.data.comments)
+        }
+
+    },
+    // submit contacts
+    async addContact({ commit }, data) {
+        commit('setIsLoading', true);
+        const res = await axios.post('http://localhost:8000/api/front/contact', data);
+        if (res.data.success) {
+            this.$toast.show(res.data.message, {
+                type: 'success'
+            });
+            commit('setIsLoading', false);
+
+        } else {
+            this.$toast.show(res.data.message, {
+                type: 'error'
+            });
+            commit('setIsLoading', false);
+
+        }
+    }
 }

@@ -7,12 +7,13 @@
         <v-card-title>
           <v-row>
             <v-col xl="6" lg="6" md="6" sm="12">
-              <form action="" class="form">
+              <form action="" class="form" @submit.prevent="contacts">
                 <v-text-field
                   label="Enter Your Name"
                   class="form__control my-3"
                   hide-details="auto"
                   outlined
+                  v-model="name"
                 >
                 </v-text-field>
                 <v-text-field
@@ -20,6 +21,7 @@
                   class="form__control my-3"
                   hide-details="auto"
                   outlined
+                  v-model="email"
                 >
                 </v-text-field>
                 <v-text-field
@@ -27,14 +29,18 @@
                   class="form__control my-3"
                   hide-details="auto"
                   outlined
+                  v-model="subject"
                 >
                 </v-text-field>
                 <v-textarea
                   class="form__control"
                   label="Enter Your Message"
                   outlined
+                  v-model="message"
                 ></v-textarea>
-                <v-btn color="error" class="login__btn">Contact Us</v-btn>
+                <v-btn color="error" type="submit" class="login__btn">{{
+                  $store.state.isloading ? "Sending...." : "Contact Us"
+                }}</v-btn>
               </form>
             </v-col>
             <v-col xl="6" lg="6" md="6" sm="12">
@@ -61,8 +67,37 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "ContactVue",
+  data: () => ({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  }),
+  methods: {
+    ...mapActions(["addContact"]),
+    async contacts() {
+      if (!this.name || !this.email || !this.subject || !this.message) {
+        this.$toast.show("Please fill the field", {
+          type: "error",
+        });
+      } else {
+        const data = {
+          name: this.name,
+          email: this.email,
+          subject: this.subject,
+          message: this.message,
+        };
+        await this.addContact(data);
+        this.name = "";
+        this.email = "";
+        this.subject = "";
+        this.message = "";
+      }
+    },
+  },
 };
 </script>
 <style >
