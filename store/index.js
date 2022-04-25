@@ -317,5 +317,18 @@ export const actions = {
             commit('setIsLoading', false);
 
         }
+    },
+
+    async addSubscribe(_, data) {
+        const res = await axios.post("http://localhost:8000/api/front/subscribe", data);
+        if (res.data.success) {
+            this.$toast.show(res.data.message, {
+                type: 'success'
+            })
+        } else {
+            this.$toast.show(res.data.message, {
+                type: 'error'
+            })
+        }
     }
 }

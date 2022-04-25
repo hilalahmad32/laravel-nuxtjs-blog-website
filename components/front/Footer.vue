@@ -31,9 +31,10 @@
 
           <form action="">
             <v-text-field
-              label="Enter Category"
+              label="Enter Your Email"
               class="form__control"
               hide-details="auto"
+              v-model="email"
             >
             </v-text-field>
 
@@ -42,9 +43,9 @@
               text
               class="login__btn"
               style="border: 1px solid blue"
-              @click="edit_dialog = false"
+              @click="subscribe"
             >
-              Update</v-btn
+              Subscribe</v-btn
             >
           </form>
           <v-btn style="margin-left: 2px; background-color: blue">
@@ -65,9 +66,28 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "FooterCamp",
-  data: () => ({}),
+  data: () => ({
+    email: "",
+  }),
+  methods: {
+    ...mapActions(["addSubscribe"]),
+    async subscribe() {
+      if (!this.email) {
+        this.$toast.show("Please fill the field", {
+          type: "error",
+        });
+      } else {
+        const data = {
+          email: this.email,
+        };
+        await this.addSubscribe(data);
+        this.email = "";
+      }
+    },
+  },
 };
 </script>
 <style>
