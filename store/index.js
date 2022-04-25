@@ -11,6 +11,9 @@ export const state = () => ({
     getCategorys: [],
     allPosts: [],
     comments: [],
+    adminComments: [],
+    subscribes: [],
+    contacts: [],
 })
 
 export const mutations = {
@@ -43,7 +46,20 @@ export const mutations = {
     },
     setComments(state, comments) {
         state.comments = comments;
-    }
+    },
+    setAdminComments(state, adminComments) {
+        state.adminComments = adminComments;
+
+    },
+    setSubscribe(state, subscribes) {
+        state.subscribes = subscribes;
+
+    },
+    setContacts(state, contacts) {
+        state.contacts = contacts;
+
+    },
+
 }
 
 export const actions = {
@@ -244,6 +260,98 @@ export const actions = {
             })
         }
 
+    },
+    // get comments
+    async getAdminsComments({ commit }) {
+        commit('setIsLoading', true);
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        };
+        const res = await axios.get("http://localhost:8000/api/admin/comments", config);
+        if (res.data.success) {
+            commit('setIsLoading', false);
+            commit('setAdminComments', res.data.comments);
+        }
+    },
+    // delete Comments
+    async deleteComment(_, id) {
+        const config = {
+            'headers': {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            }
+        };
+        const res = await axios.delete("http://localhost:8000/api/admin/comments/" + id, config);
+        if (res.data.success) {
+            this.$toast.show(res.data.message, {
+                type: 'success'
+            });
+        } else {
+            this.$toast.show(res.data.message, {
+                type: 'error'
+            });
+        }
+    },
+    async getSubscribes({ commit }) {
+        commit('setIsLoading', true);
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        };
+        const res = await axios.get("http://localhost:8000/api/admin/subscribe", config);
+        if (res.data.success) {
+            commit('setIsLoading', false);
+            commit('setSubscribe', res.data.subscribes);
+        }
+    },
+    async deleteSub(_, id) {
+        const config = {
+            'headers': {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            }
+        };
+        const res = await axios.delete("http://localhost:8000/api/admin/subscribe/" + id, config);
+        if (res.data.success) {
+            this.$toast.show(res.data.message, {
+                type: 'success'
+            });
+        } else {
+            this.$toast.show(res.data.message, {
+                type: 'error'
+            });
+        }
+    },
+    async getContacts({ commit }) {
+        commit('setIsLoading', true);
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        };
+        const res = await axios.get("http://localhost:8000/api/admin/contacts", config);
+        if (res.data.success) {
+            commit('setIsLoading', false);
+            commit('setContacts', res.data.contects);
+        }
+    },
+    async deleteContact(_, id) {
+        const config = {
+            'headers': {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            }
+        };
+        const res = await axios.delete("http://localhost:8000/api/admin/contacts/" + id, config);
+        if (res.data.success) {
+            this.$toast.show(res.data.message, {
+                type: 'success'
+            });
+        } else {
+            this.$toast.show(res.data.message, {
+                type: 'error'
+            });
+        }
     },
     // frontend side
     async getPopularPost({ commit }) {

@@ -58,6 +58,21 @@ export default {
           title: "Post",
           to: "/admin/post",
         },
+        {
+          icon: "mdi-post",
+          title: "Comment",
+          to: "/admin/comments",
+        },
+        {
+          icon: "mdi-post",
+          title: "Subscribe",
+          to: "/admin/subscriber",
+        },
+        {
+          icon: "mdi-post",
+          title: "Contacts",
+          to: "/admin/contacts",
+        },
       ],
       miniVariant: false,
       right: true,

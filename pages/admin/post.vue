@@ -85,6 +85,8 @@ export default {
   components: {
     SidebarVue,
   },
+  middleware: ["auth"],
+
   data: () => ({
     totalPost: 0,
   }),
