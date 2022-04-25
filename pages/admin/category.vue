@@ -4,7 +4,7 @@
     <v-container>
       <v-card>
         <v-card-text class="d-flex justify-space-between align-center">
-          <v-card-title> Category ( 33 ) </v-card-title>
+          <v-card-title> Category ( {{ totalCategory }} ) </v-card-title>
           <v-card-actions>
             <nuxt-link to="/admin/create-category">
               <v-btn color="red lighten-2">New </v-btn>
@@ -72,8 +72,12 @@
 <script>
 import SidebarVue from "../../components/admin/Sidebar.vue";
 import { mapActions } from "vuex";
+import axios from "axios";
 export default {
   name: "CategoryPage",
+  data: () => ({
+    totalCategory: 0,
+  }),
 
   components: {
     SidebarVue,
@@ -87,11 +91,24 @@ export default {
     },
     ...mapActions(["getAdmins"]),
   },
+  async mounted() {
+    await this.getAdmins();
 
-  mounted() {
-    this.getAdmins();
+    await this.getCategory();
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    };
+    this.isloading = true;
 
-    this.getCategory();
+    const res = await axios.get(
+      "http://localhost:8000/api/admin/total-category",
+      config
+    );
+    if (res.data.success) {
+      this.totalCategory = res.data.categorys;
+    }
   },
 };
 </script>

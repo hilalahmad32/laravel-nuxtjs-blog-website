@@ -4,7 +4,7 @@
     <v-container>
       <v-card>
         <v-card-text class="d-flex justify-space-between align-center">
-          <v-card-title> Post ( 33 ) </v-card-title>
+          <v-card-title> Post ( {{ totalPost }} ) </v-card-title>
           <v-card-actions>
             <nuxt-link to="/admin/posts/create-post">
               <v-btn color="red lighten-2"> New </v-btn>
@@ -79,12 +79,15 @@
 <script>
 import SidebarVue from "../../components/admin/Sidebar.vue";
 import { mapActions } from "vuex";
+import axios from "axios";
 export default {
   name: "PostPage",
   components: {
     SidebarVue,
   },
-
+  data: () => ({
+    totalPost: 0,
+  }),
   methods: {
     ...mapActions(["getPosts"]),
     ...mapActions(["deletePost"]),
@@ -95,9 +98,23 @@ export default {
     ...mapActions(["getAdmins"]),
   },
 
-  mounted() {
-    this.getAdmins();
-    this.getPosts();
+  async mounted() {
+    await this.getAdmins();
+    await this.getPosts();
+    // get total Posts
+    const config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    };
+    const res1 = await axios.get(
+      "http://localhost:8000/api/admin/total-posts",
+      config
+    );
+
+    if (res1.data.success) {
+      this.totalPost = res1.data.posts;
+    }
   },
 };
 </script>

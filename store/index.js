@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 export const state = () => ({
     admins: {},
     token: localStorage.getItem('token') || "",
@@ -244,7 +245,6 @@ export const actions = {
         }
 
     },
-
     // frontend side
     async getPopularPost({ commit }) {
         commit("setIsLoading", true);
@@ -318,7 +318,7 @@ export const actions = {
 
         }
     },
-
+    // add subscribe
     async addSubscribe(_, data) {
         const res = await axios.post("http://localhost:8000/api/front/subscribe", data);
         if (res.data.success) {
