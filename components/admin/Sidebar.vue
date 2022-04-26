@@ -73,6 +73,16 @@ export default {
           title: "Contacts",
           to: "/admin/contacts",
         },
+        {
+          icon: "mdi-post",
+          title: "Change Password",
+          to: "/admin/change-password",
+        },
+        {
+          icon: "mdi-post",
+          title: "Setting",
+          to: "/admin/setting",
+        },
       ],
       miniVariant: false,
       right: true,

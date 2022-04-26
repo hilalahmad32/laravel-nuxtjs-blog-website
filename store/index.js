@@ -14,6 +14,7 @@ export const state = () => ({
     adminComments: [],
     subscribes: [],
     contacts: [],
+    settings: [],
 })
 
 export const mutations = {
@@ -57,7 +58,9 @@ export const mutations = {
     },
     setContacts(state, contacts) {
         state.contacts = contacts;
-
+    },
+    setSettings(state, settings) {
+        state.settings = settings;
     },
 
 }
@@ -438,5 +441,13 @@ export const actions = {
                 type: 'error'
             })
         }
+    },
+    // get all settings
+    async getSettings({ commit }) {
+        const res = await axios.get("http://localhost:8000/api/front/setting");
+        if (res.data.success) {
+            commit('setSettings', res.data.settings)
+        }
+
     }
 }

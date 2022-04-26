@@ -3,12 +3,9 @@
     <v-container class="mt-10">
       <v-row class="my-5">
         <v-col xl="4" lg="4" md="4" sm="6" xs="12">
-          <h3 class="text--white">About Website</h3>
+          <h3 class="text--white">{{ $store.state.settings.footer_logo }}</h3>
           <p class="text--white">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
-            repudiandae modi. Quaerat optio magnam ipsam velit! Laudantium
-            exercitationem harum quis, rem a quos earum! Neque nobis vitae omnis
-            quidem. At.
+            {{ $store.state.settings.footer_desc }}
           </p>
           <v-btn
             color="primary"
@@ -48,9 +45,11 @@
               Subscribe</v-btn
             >
           </form>
-          <v-btn style="margin-left: 2px; background-color: blue">
-            <v-icon>mdi-facebook</v-icon>
-          </v-btn>
+          <a :href="`${$store.state.settings.facebook}`">
+            <v-btn style="margin-left: 2px; background-color: blue">
+              <v-icon>mdi-facebook</v-icon>
+            </v-btn>
+          </a>
           <v-btn style="margin-left: 2px; background-color: black">
             <v-icon>mdi-github</v-icon>
           </v-btn>
@@ -74,6 +73,8 @@ export default {
   }),
   methods: {
     ...mapActions(["addSubscribe"]),
+    ...mapActions(["getSettings"]),
+
     async subscribe() {
       if (!this.email) {
         this.$toast.show("Please fill the field", {
@@ -87,6 +88,9 @@ export default {
         this.email = "";
       }
     },
+  },
+  mounted() {
+    this.getSettings();
   },
 };
 </script>

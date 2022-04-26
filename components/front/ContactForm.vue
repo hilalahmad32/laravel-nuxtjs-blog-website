@@ -46,18 +46,18 @@
             <v-col xl="6" lg="6" md="6" sm="12">
               <div class="my-3 text-gray">
                 <h4>Gmail</h4>
-                <span>ahilal123@gmail.com</span>
+                <span>{{ $store.state.settings.email }}</span>
               </div>
               <hr />
               <div class="my-3 text-gray">
                 <h4>Phone</h4>
-                <span>343254334</span>
+                <span>{{ $store.state.settings.phone }}</span>
               </div>
               <hr />
 
               <div class="my-3 text-gray">
                 <h4>Location</h4>
-                <span>Pakistan</span>
+                <span>{{ $store.state.settings.address }}</span>
               </div>
             </v-col>
           </v-row>
@@ -78,6 +78,8 @@ export default {
   }),
   methods: {
     ...mapActions(["addContact"]),
+    ...mapActions(["getSettings"]),
+
     async contacts() {
       if (!this.name || !this.email || !this.subject || !this.message) {
         this.$toast.show("Please fill the field", {
@@ -97,6 +99,9 @@ export default {
         this.message = "";
       }
     },
+  },
+  mounted() {
+    this.getSettings();
   },
 };
 </script>

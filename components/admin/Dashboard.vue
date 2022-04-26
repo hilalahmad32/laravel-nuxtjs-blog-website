@@ -2,7 +2,9 @@
   <div>
     <v-container>
       <div v-if="isloading">
-        <h3 class="text-center my-4">Loading...</h3>
+        <h3 class="text-center my-4 text-white">
+          <img src="~/static/loading.svg" alt="" />
+        </h3>
       </div>
       <div v-else>
         <v-row>

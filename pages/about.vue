@@ -3,14 +3,8 @@
     <NavbarVue />
     <AboutHeroVue />
     <v-container class="my-10">
-      <h1>About me</h1>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste porro
-        soluta vero libero nihil numquam eveniet ipsum excepturi! Aut, et ex
-        perspiciatis accusantium nobis nihil voluptate eum odio ipsa veritatis.
-        perspiciatis accusantium nobis nihil voluptate eum odio ipsa veritatis.
-        perspiciatis accusantium nobis nihil voluptate eum odio ipsa veritatis.
-      </p>
+      <h1>{{ $store.state.settings.about_title }}</h1>
+      <p>{{ $store.state.settings.about_desc }}</p>
     </v-container>
     <FooterVue />
   </div>
@@ -19,6 +13,7 @@
 import AboutHeroVue from "../components/front/AboutHero.vue";
 import FooterVue from "../components/front/Footer.vue";
 import NavbarVue from "../components/front/Navbar.vue";
+import { mapActions } from "vuex";
 export default {
   name: "AboutPage",
   head() {
@@ -30,6 +25,12 @@ export default {
     NavbarVue,
     FooterVue,
     AboutHeroVue,
+  },
+  methods: {
+    ...mapActions(["getSettings"]),
+  },
+  mounted() {
+    this.getSettings();
   },
 };
 </script>

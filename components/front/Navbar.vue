@@ -3,7 +3,9 @@
     <div class="main__nav">
       <v-container>
         <div class="nav">
-          <nuxt-link to="/" exact class="nav__logo">Mitech</nuxt-link>
+          <nuxt-link to="/" exact class="nav__logo">{{
+            $store.state.settings.header_logo
+          }}</nuxt-link>
           <v-icon class="show text--white" @click="nav = !nav">{{
             nav ? "X" : "mdi-menu"
           }}</v-icon>
@@ -19,11 +21,18 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "NavbarComp",
   data: () => ({
     nav: false,
   }),
+  methods: {
+    ...mapActions(["getSettings"]),
+  },
+  mounted() {
+    this.getSettings();
+  },
 };
 </script>
 <style >

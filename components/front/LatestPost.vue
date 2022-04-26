@@ -2,7 +2,7 @@
   <div>
     <v-container class="my-10">
       <h1>Latest Post</h1>
-      <div v-if="$store.state.isloading">Loading...</div>
+      <div v-if="$store.state.isloading"></div>
       <div v-else>
         <v-row class="my-5">
           <v-col

@@ -13,7 +13,9 @@
       </div>
       <h1>All Post</h1>
       <div class="my-4 text-center" v-if="$store.state.isloading">
-        Loading....
+        <h1 class="text-center my-3">
+          <img src="~/static/loading.svg" alt="" />
+        </h1>
       </div>
       <div v-else>
         <v-row class="my-5">

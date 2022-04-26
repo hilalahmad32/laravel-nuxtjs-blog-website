@@ -2,7 +2,11 @@
   <div>
     <NavbarVue />
     <PostDetailHeroVue :title="title" />
-    <div v-if="isloading" class="my-4 text-center">Loading...</div>
+    <div v-if="isloading" class="my-4 text-center">
+      <h1 class="text-center my-3">
+        <img src="~/static/loading.svg" alt="" />
+      </h1>
+    </div>
     <div v-else>
       <PostDetailVue
         :category="category"

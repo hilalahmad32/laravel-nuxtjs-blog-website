@@ -4,7 +4,11 @@
     <AllCategoryPostHeroVue />
     <v-container class="my-10">
       <h1>Category Post</h1>
-      <div v-if="isloading">Loading...</div>
+      <div v-if="isloading">
+        <h1 class="text-center my-3">
+          <img src="~/static/loading.svg" alt="" />
+        </h1>
+      </div>
       <div v-else>
         <div v-if="posts.length > 0">
           <v-row class="my-5">

@@ -2,7 +2,11 @@
   <div>
     <v-container class="my-10">
       <h1>Popular Post</h1>
-      <div v-if="$store.state.isloading">Loading....</div>
+      <div v-if="$store.state.isloading">
+        <h1 class="text-center my-3">
+          <img src="~/static/loading.svg" alt="" />
+        </h1>
+      </div>
       <div v-else>
         <v-row class="my-5">
           <v-col
